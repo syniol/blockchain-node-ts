@@ -1,0 +1,24 @@
+version: "3"
+services:
+  node:
+    image: node:16
+    container_name: blockchain_node
+    volumes:
+      - ./:/usr/local/blockchain
+    tty: true
+    working_dir: /usr/local/blockchain
+    networks:
+      - blockchain_node_net
+
+  postgres:
+    image: postgres:14
+    container_name: blockchain_postgres
+    environment:
+      PG_USER: 'postgres'
+      PG_PASSWORD: 'pa$$w0rd'
+    networks:
+      - blockchain_node_net
+
+networks:
+  blockchain_node_net:
+    driver: bridge
