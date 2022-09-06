@@ -6,4 +6,5 @@ export default {
     transform: {
         '^.+\\.ts?$': ['@swc/jest'],
     },
+    testMatch: ['**/?(*.)+(spec|test).[t]s?()'],
 }

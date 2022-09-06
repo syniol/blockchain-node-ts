@@ -28,5 +28,9 @@
         "noImplicitOverride": true /* Ensure overriding members in derived classes are marked with an override modifier. */,
         "skipLibCheck": true /* Skip type checking all .d.ts files. */
     },
-    "include": ["src/**/*.ts", "src/**/*.json"]
+    "include": ["src/**/*.ts", "src/**/*.json"],
+    "exclude": [
+        "src/**/*.spec.ts",
+        "src/**/*.test.ts"
+    ]
 }
