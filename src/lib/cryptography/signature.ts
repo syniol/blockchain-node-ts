@@ -23,7 +23,7 @@ export class DigitalSignature {
 
         if (!process.env.DS_PRV_KEY) {
             throw new Error(
-                'public key is not populated in: DS_PRV_KEY',
+                'private key is not populated in: DS_PRV_KEY',
             )
         }
 

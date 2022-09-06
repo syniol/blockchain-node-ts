@@ -10,7 +10,7 @@ describe('Cryptography Specs', () => {
             })
 
             afterAll(() => {
-                process.env.HMAC_SECRET = ''
+                delete process.env.HMAC_SECRET
             })
 
             it('should create a hash', () => {
@@ -32,7 +32,7 @@ describe('Cryptography Specs', () => {
 
         describe('given secret key is not defined as env variable', () => {
             beforeAll(() => {
-                process.env.HMAC_SECRET = ''
+                delete process.env.HMAC_SECRET
                 sut = HMAC.create()
             })
 

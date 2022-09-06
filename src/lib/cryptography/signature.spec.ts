@@ -85,4 +85,46 @@ describe('DigitalSignature Specs', () => {
             ).toBeFalsy()
         })
     })
+
+    describe('given public key not given as environment variable', () => {
+        beforeAll(() => {
+            delete process.env.DS_PUB_KEY
+            process.env.DS_PRV_KEY = privateKey.toString()
+        })
+
+        afterAll(() => {
+            delete process.env.DS_PRV_KEY
+        })
+
+        it('should throw an error for missing public key', () => {
+            expect(() => DigitalSignature.create()).toThrow(
+                expect.objectContaining({
+                    message: expect.stringContaining(
+                        'public key is not populated',
+                    ),
+                }),
+            )
+        })
+    })
+
+    describe('given private key not given as environment variable', () => {
+        beforeAll(() => {
+            process.env.DS_PUB_KEY = publicKey.toString()
+            delete process.env.DS_PRV_KEY
+        })
+
+        afterAll(() => {
+            delete process.env.DS_PUB_KEY
+        })
+
+        it('should throw an error for missing private key', () => {
+            expect(() => DigitalSignature.create()).toThrow(
+                expect.objectContaining({
+                    message: expect.stringContaining(
+                        'private key is not populated',
+                    ),
+                }),
+            )
+        })
+    })
 })
