@@ -61,4 +61,25 @@ describe('Tree (Merkle Tree) Specs', () => {
             )
         })
     })
+
+    describe('given few leafs added to the tree but not build a tree; when MerkleRoot requested', () => {
+        beforeAll(() => {
+            sut = new Tree()
+
+            for (let i = 0; i < 12; i++) {
+                sut.addLeaf(
+                    crypto
+                        .createHash('SHA256')
+                        .update(`MockLeaf${i}`)
+                        .digest()
+                        .toString('hex'),
+                    false,
+                )
+            }
+        })
+
+        it('should create buffer output', () => {
+            expect(sut.getMerkleRoot()).toBeNull()
+        })
+    })
 })
