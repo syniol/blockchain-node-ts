@@ -1,5 +1,6 @@
-import { Tree } from './merkle-tree'
 import crypto from 'crypto'
+
+import { Tree } from './merkle-tree'
 
 describe('Tree (Merkle Tree) Specs', () => {
     let sut: Tree
