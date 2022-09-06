@@ -7,4 +7,5 @@ export default {
         '^.+\\.ts?$': ['@swc/jest'],
     },
     testMatch: ['**/?(*.)+(spec|test).[t]s?()'],
+    verbose: true,
 }
