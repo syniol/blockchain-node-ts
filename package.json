@@ -20,7 +20,8 @@
   "scripts": {
     "prestart": "rm -rf ./dist && tsc",
     "start": "node ./dist/index.js",
-    "test": "jest"
+    "test": "jest",
+    "test:cov": "jest --collectCoverage=true"
   },
   "dependencies": {
     "merkle-tools": "^1.4.1"
