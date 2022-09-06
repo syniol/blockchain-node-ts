@@ -1,5 +1,6 @@
-import { DigitalSignature } from './signature'
 import crypto from 'crypto'
+
+import { DigitalSignature } from './signature'
 
 describe('DigitalSignature Specs', () => {
     let sut: DigitalSignature

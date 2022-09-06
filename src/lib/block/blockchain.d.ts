@@ -1,6 +1,6 @@
 import { BlockAPI } from './block'
 
-export interface BlockChainAPI {
+export declare interface BlockChainAPI {
     acceptBlock(block: BlockAPI): void
 
     verifyChain(): void
