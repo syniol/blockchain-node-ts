@@ -1,21 +1,21 @@
-﻿import { ClaimType } from './ClaimType'
+﻿import { ClaimType } from './claim-type'
 import { Hash } from '../../lib/cryptography'
 
 export class Block {
     // Provided by the user
-    public ClaimNumber: string
-    public SettlementAmount: number
-    public SettlementDate: Date
-    public CarRegistration: string
-    public Mileage: number
-    public ClaimType: ClaimType
+    public claimNumber: string
+    public settlementAmount: number
+    public settlementDate: Date
+    public carRegistration: string
+    public mileage: number
+    public claimType: ClaimType
 
     // Set as part of the block creation process.
-    public BlockNumber: number
-    public CreatedDate: Date
-    public BlockHash?: string
-    public PreviousBlockHash?: string
-    public NextBlock?: Block
+    public blockNumber: number
+    public createdDate: Date
+    public blockHash?: string
+    public previousBlockHash?: string
+    public nextBlock?: Block
 
     public constructor(
         blockNumber: number,
@@ -27,14 +27,14 @@ export class Block {
         claimType: ClaimType,
         parent?: Block,
     ) {
-        this.BlockNumber = blockNumber
-        this.ClaimNumber = claimNumber
-        this.SettlementAmount = settlementAmount
-        this.SettlementDate = settlementDate
-        this.CarRegistration = carRegistration
-        this.Mileage = mileage
-        this.ClaimType = claimType
-        this.CreatedDate = new Date()
+        this.blockNumber = blockNumber
+        this.claimNumber = claimNumber
+        this.settlementAmount = settlementAmount
+        this.settlementDate = settlementDate
+        this.carRegistration = carRegistration
+        this.mileage = mileage
+        this.claimType = claimType
+        this.createdDate = new Date()
         this.SetBlockHash(parent)
     }
 
@@ -42,15 +42,15 @@ export class Block {
         previousBlockHash?: string,
     ): string {
         const txnHash =
-            this.ClaimNumber +
-            this.SettlementAmount +
-            this.SettlementDate +
-            this.CarRegistration +
-            this.Mileage +
-            this.ClaimType
+            this.claimNumber +
+            this.settlementAmount +
+            this.settlementDate +
+            this.carRegistration +
+            this.mileage +
+            this.claimType
         const blockheader =
-            this.BlockNumber +
-            this.CreatedDate.toUTCString() +
+            this.blockNumber +
+            this.createdDate.toUTCString() +
             (previousBlockHash || '')
         const combined = txnHash + blockheader
 
@@ -60,15 +60,15 @@ export class Block {
     // Set the block hash
     public SetBlockHash(parent?: Block): void {
         if (parent) {
-            this.PreviousBlockHash = parent.BlockHash
-            parent.NextBlock = this
+            this.previousBlockHash = parent.blockHash
+            parent.nextBlock = this
         } else {
             // Previous block is the genesis block.
-            this.PreviousBlockHash = undefined
+            this.previousBlockHash = undefined
         }
 
-        this.BlockHash = this.CalculateBlockHash(
-            this.PreviousBlockHash,
+        this.blockHash = this.CalculateBlockHash(
+            this.previousBlockHash,
         )
     }
 
@@ -81,19 +81,19 @@ export class Block {
         // Is this a valid block and transaction
         const newBlockHash =
             this.CalculateBlockHash(prevBlockHash)
-        if (newBlockHash != this.BlockHash) {
+        if (newBlockHash != this.blockHash) {
             isValid = false
         } else {
             isValid =
-                this.PreviousBlockHash === prevBlockHash
+                this.previousBlockHash === prevBlockHash
         }
 
         this.PrintVerificationMessage(verbose, isValid)
 
         // Check the next block by passing in our newly calculated blockhash. This will be compared to the previous
         // hash in the next block. They should match for the chain to be valid.
-        if (this.NextBlock != null) {
-            return this.NextBlock.IsValidChain(
+        if (this.nextBlock != null) {
+            return this.nextBlock.IsValidChain(
                 newBlockHash,
                 verbose,
             )
@@ -110,13 +110,13 @@ export class Block {
             if (!isValid) {
                 console.log(
                     'Block Number ' +
-                        this.BlockNumber +
+                        this.blockNumber +
                         ' : FAILED VERIFICATION',
                 )
             } else {
                 console.log(
                     'Block Number ' +
-                        this.BlockNumber +
+                        this.blockNumber +
                         ' : PASS VERIFICATION',
                 )
             }

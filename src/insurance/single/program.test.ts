@@ -1,6 +1,6 @@
-﻿import { BlockChain } from './BlockChain'
-import { Block } from './Block'
-import { ClaimType } from './ClaimType'
+﻿import { BlockChain } from './blockchain'
+import { Block } from './block'
+import { ClaimType } from './claim-type'
 
 describe('Single Transaction Blockchain Specs', () => {
     const sut: BlockChain = new BlockChain()
@@ -99,8 +99,8 @@ describe('Single Transaction Blockchain Specs', () => {
     })
 
     it('should NOT verify', function () {
-        block4.CreatedDate = new Date(2017, 9, 20)
-        block2.CreatedDate = new Date(2020, 9, 20)
+        block4.createdDate = new Date(2017, 9, 20)
+        block2.createdDate = new Date(2020, 9, 20)
         expect(sut.VerifyChain()).toBeFalsy()
     })
 })

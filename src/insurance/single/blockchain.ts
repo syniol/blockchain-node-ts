@@ -1,32 +1,32 @@
-﻿import { Block } from './Block'
+﻿import { Block } from './block'
 
 export class BlockChain {
-    public CurrentBlock?: Block
-    public HeadBlock?: Block
+    public currentBlock?: Block
+    public headBlock?: Block
 
-    public Blocks: Block[]
+    public blocks: Block[]
 
     public constructor() {
-        this.Blocks = []
+        this.blocks = []
     }
 
     public AcceptBlock(block: Block): void {
         // This is the first block, so make it the genesis block.
-        if (!this.HeadBlock) {
-            this.HeadBlock = block
-            this.HeadBlock.PreviousBlockHash = undefined
+        if (!this.headBlock) {
+            this.headBlock = block
+            this.headBlock.previousBlockHash = undefined
         }
 
-        this.CurrentBlock = block
-        this.Blocks.push(block)
+        this.currentBlock = block
+        this.blocks.push(block)
     }
 
     public VerifyChain(): boolean {
-        if (!this.HeadBlock) {
+        if (!this.headBlock) {
             throw new Error('Genesis block not set.')
         }
 
-        let isValid = this.HeadBlock.IsValidChain(
+        let isValid = this.headBlock.IsValidChain(
             undefined,
             true,
         )
