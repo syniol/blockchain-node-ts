@@ -4,6 +4,7 @@ import { ClaimType } from './claim-type'
 
 describe('Single Transaction Blockchain Specs', () => {
     const sut: BlockChain = new BlockChain()
+
     const block1 = new Block(
         0,
         'ABC123',
@@ -85,22 +86,21 @@ describe('Single Transaction Blockchain Specs', () => {
         block7,
     )
 
-    sut.AcceptBlock(block1)
-    sut.AcceptBlock(block2)
-    sut.AcceptBlock(block3)
-    sut.AcceptBlock(block4)
-    sut.AcceptBlock(block5)
-    sut.AcceptBlock(block6)
-    sut.AcceptBlock(block7)
-    sut.AcceptBlock(block8)
+    sut.acceptBlock(block1)
+    sut.acceptBlock(block2)
+    sut.acceptBlock(block3)
+    sut.acceptBlock(block4)
+    sut.acceptBlock(block5)
+    sut.acceptBlock(block6)
+    sut.acceptBlock(block7)
+    sut.acceptBlock(block8)
 
-    it('should verify', function () {
-        expect(sut.VerifyChain()).toBeTruthy()
+    it('should verify', () => {
+        expect(sut.verifyChain()).toBeTruthy()
     })
 
-    it('should NOT verify', function () {
+    it('should NOT verify', () => {
         block4.createdDate = new Date(2017, 9, 20)
-        block2.createdDate = new Date(2020, 9, 20)
-        expect(sut.VerifyChain()).toBeFalsy()
+        expect(sut.verifyChain()).toBeFalsy()
     })
 })

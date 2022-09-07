@@ -2,7 +2,7 @@
 import { Hash } from '../../lib/cryptography'
 
 export class Block {
-    // Provided by the user
+    // Provided by the consumer
     public claimNumber: string
     public settlementAmount: number
     public settlementDate: Date
@@ -10,7 +10,7 @@ export class Block {
     public mileage: number
     public claimType: ClaimType
 
-    // Set as part of the block creation process.
+    // Set as part of the block creation process. (Block header)
     public blockNumber: number
     public createdDate: Date
     public blockHash?: string
@@ -35,10 +35,10 @@ export class Block {
         this.mileage = mileage
         this.claimType = claimType
         this.createdDate = new Date()
-        this.SetBlockHash(parent)
+        this.assignBlockHash(parent)
     }
 
-    public CalculateBlockHash(
+    public calculateBlockHash(
         previousBlockHash?: string,
     ): string {
         const txnHash =
@@ -48,17 +48,17 @@ export class Block {
             this.carRegistration +
             this.mileage +
             this.claimType
-        const blockheader =
+
+        const blockHeader =
             this.blockNumber +
             this.createdDate.toUTCString() +
             (previousBlockHash || '')
-        const combined = txnHash + blockheader
+        const combined = txnHash + blockHeader
 
         return new Hash().createHash(combined)
     }
 
-    // Set the block hash
-    public SetBlockHash(parent?: Block): void {
+    public assignBlockHash(parent?: Block): void {
         if (parent) {
             this.previousBlockHash = parent.blockHash
             parent.nextBlock = this
@@ -67,12 +67,12 @@ export class Block {
             this.previousBlockHash = undefined
         }
 
-        this.blockHash = this.CalculateBlockHash(
+        this.blockHash = this.calculateBlockHash(
             this.previousBlockHash,
         )
     }
 
-    public IsValidChain(
+    public isValidChain(
         prevBlockHash?: string,
         verbose?: boolean,
     ): boolean {
@@ -80,20 +80,21 @@ export class Block {
 
         // Is this a valid block and transaction
         const newBlockHash =
-            this.CalculateBlockHash(prevBlockHash)
-        if (newBlockHash != this.blockHash) {
+            this.calculateBlockHash(prevBlockHash)
+        if (newBlockHash !== this.blockHash) {
             isValid = false
         } else {
             isValid =
                 this.previousBlockHash === prevBlockHash
         }
 
-        this.PrintVerificationMessage(verbose, isValid)
+        this.logVerification(verbose, isValid)
 
-        // Check the next block by passing in our newly calculated blockhash. This will be compared to the previous
-        // hash in the next block. They should match for the chain to be valid.
-        if (this.nextBlock != null) {
-            return this.nextBlock.IsValidChain(
+        // Check the next block by passing in our newly calculated block hash.
+        // This will be compared to the previous hash in the next block.
+        // They should match for the chain to be valid.
+        if (this.nextBlock) {
+            return this.nextBlock.isValidChain(
                 newBlockHash,
                 verbose,
             )
@@ -102,7 +103,7 @@ export class Block {
         return isValid
     }
 
-    private PrintVerificationMessage(
+    private logVerification(
         verbose?: boolean,
         isValid?: boolean,
     ): void {
@@ -117,7 +118,7 @@ export class Block {
                 console.log(
                     'Block Number ' +
                         this.blockNumber +
-                        ' : PASS VERIFICATION',
+                        ' : PASSED VERIFICATION',
                 )
             }
         }

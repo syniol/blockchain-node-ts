@@ -2,6 +2,24 @@
 Creating Blockchain from scratch using TypeScript for Node.js ecosystem.
 
 
+## Cryptography
+There are three main cryptography methods used in Blockchain:
+
+ * Hash
+ * HMAC
+ * Digital Signature
+
+
+## Transaction(s)
+In this example your can find three example of Block implementation. Blocks 
+with more than one transaction uses Merkle Tree for all transactions added 
+inside a block.
+
+* Single Transaction
+* Multiple Transaction
+* Transaction Pool
+
+
 ## Environment Variables
 Please see list below of all environment variables to get this application
 up and running.
@@ -12,4 +30,5 @@ up and running.
 
 
 #### Credits
+Author: Hadi Tajallaei <hadi@syniol.com>
 Copyright &copy; 2022. All Rights Reserved.

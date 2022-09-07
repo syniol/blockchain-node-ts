@@ -1,6 +1,8 @@
 class BlockChain {
     public constructor() {
-        console.log('hello!')
+        console.log(
+            'Welcome to Node.js Blockchain Implementation',
+        )
     }
 }
 
