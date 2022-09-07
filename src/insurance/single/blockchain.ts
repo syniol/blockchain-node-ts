@@ -1,6 +1,7 @@
 ﻿import { Block } from './block'
+import { BlockChainAPI } from '../../lib/block/blockchain'
 
-export class BlockChain {
+export class BlockChain implements BlockChainAPI {
     public currentBlock?: Block
     public headBlock?: Block
 

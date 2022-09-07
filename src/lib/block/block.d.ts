@@ -1,5 +1,3 @@
 export declare interface BlockAPI {
-    calculateBlockHash(
-        previousBlockHash: string | null,
-    ): string
+    calculateBlockHash(previousBlockHash?: string): string
 }

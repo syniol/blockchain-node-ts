@@ -1,7 +1,8 @@
 ﻿import { ClaimType } from './claim-type'
 import { Hash } from '../../lib/cryptography'
+import { BlockAPI } from '../../lib/block/block'
 
-export class Block {
+export class Block implements BlockAPI {
     // Provided by the consumer
     public claimNumber: string
     public settlementAmount: number

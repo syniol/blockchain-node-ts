@@ -99,8 +99,9 @@ describe('Single Transaction Blockchain Specs', () => {
         expect(sut.verifyChain()).toBeTruthy()
     })
 
-    it('should NOT verify', () => {
+    it('should NOT verify when one of blocks is compromised ', () => {
         block4.createdDate = new Date(2017, 9, 20)
+
         expect(sut.verifyChain()).toBeFalsy()
     })
 })
